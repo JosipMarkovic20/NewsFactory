@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:id="@+id/newsDetailsPic"
+                android:src="@drawable/placeholder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsDetailsTitle"
+                app:layout_constraintTop_toBottomOf="@id/newsDetailsPic"
+                tools:text="News title which is very veryyyyy long"
+                android:maxLines="2"
+                style="@style/NewsTitle"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsDetailsDescription"
+                app:layout_constraintTop_toBottomOf="@id/newsDetailsTitle"
+                style="@style/NewsDescription"
+                tools:text="This is description of news."/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
