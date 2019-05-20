@@ -3,10 +3,11 @@ package com.example.newsfactory.app
 import android.app.Application
 import android.content.Context
 
+
 class NewsApp : Application() {
 
     companion object {
-        private lateinit var instance: NewsApp
+        lateinit var instance: NewsApp
 
         fun getAppContext(): Context = instance.applicationContext
     }
@@ -15,5 +16,6 @@ class NewsApp : Application() {
         instance = this
         super.onCreate()
     }
+
 
 }

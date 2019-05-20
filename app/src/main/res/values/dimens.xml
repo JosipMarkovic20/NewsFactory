@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="newsPicWidth">120dp</dimen>
-    <dimen name="newsPicHeight">70dp</dimen>
-    <dimen name="newsTitleSize">26sp</dimen>
-    <dimen name="newsDescriptionSize">16sp</dimen>
-    <dimen name="standardMargin">16dp</dimen>
+    <dimen name="newsPicHeight">65dp</dimen>
+    <dimen name="newsTitleSize">20sp</dimen>
+    <dimen name="newsDescriptionSize">12sp</dimen>
+    <dimen name="standardMargin">8dp</dimen>
+    <dimen name="news_details_pic_height">230dp</dimen>
 </resources>
