@@ -45,6 +45,11 @@ class NewsFragment : BaseFragment() {
         initUi()
     }
 
+    override fun onDestroy() {
+        repository.clearAllNews()
+        super.onDestroy()
+    }
+
 
     private fun initUi() {
         newsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -94,7 +99,7 @@ class NewsFragment : BaseFragment() {
         news.forEach{
             repository.addNews(it)
         }
-        adapter.setData(news)
+        adapter.setData(repository.getNews())
     }
 
 

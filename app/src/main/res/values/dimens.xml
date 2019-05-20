@@ -3,7 +3,7 @@
     <dimen name="newsPicWidth">120dp</dimen>
     <dimen name="newsPicHeight">65dp</dimen>
     <dimen name="newsTitleSize">20sp</dimen>
-    <dimen name="newsDescriptionSize">12sp</dimen>
+    <dimen name="newsDescriptionSize">16sp</dimen>
     <dimen name="standardMargin">8dp</dimen>
     <dimen name="news_details_pic_height">230dp</dimen>
 </resources>
