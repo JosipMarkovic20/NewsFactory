@@ -28,4 +28,8 @@ class NewsRoomRepository : NewsRepository {
         newsDao.deleteAllNews()
     }
 
+    override fun sizeOfDb(): Int {
+        return newsDao.sizeOfDb()
+    }
+
 }

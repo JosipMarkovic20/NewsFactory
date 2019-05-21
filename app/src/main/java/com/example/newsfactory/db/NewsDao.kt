@@ -18,4 +18,7 @@ interface NewsDao {
     @Query("DELETE FROM NEWS" )
     fun deleteAllNews()
 
+    @Query("SELECT count(*)FROM NEWS")
+    fun sizeOfDb():Int
+
 }

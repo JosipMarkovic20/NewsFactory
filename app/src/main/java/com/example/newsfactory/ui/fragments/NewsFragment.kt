@@ -7,10 +7,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsfactory.R
-import com.example.newsfactory.common.EXTRA_NEWS_ID
-import com.example.newsfactory.common.EXTRA_SCREEN_TYPE
-import com.example.newsfactory.common.RESPONSE_OK
-import com.example.newsfactory.common.displayToast
 import com.example.newsfactory.model.News
 import com.example.newsfactory.model.response.GetNewsResponse
 import com.example.newsfactory.networking.BackendFactory
@@ -21,17 +17,14 @@ import kotlinx.android.synthetic.main.fragment_news.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import org.json.JSONException
-import android.widget.Toast
+import com.example.newsfactory.common.*
+import com.example.newsfactory.persistance.NewsPrefs
 import com.example.newsfactory.persistance.NewsRoomRepository
-import com.example.newsfactory.ui.activities.MainActivity
-import org.json.JSONObject
-import org.json.JSONArray
+
 
 
 
 class NewsFragment : BaseFragment() {
-
 
     private val adapter by lazy { NewsAdapter {onItemSelected(it)} }
     private val repository = NewsRoomRepository()
@@ -45,16 +38,21 @@ class NewsFragment : BaseFragment() {
         initUi()
     }
 
-    override fun onDestroy() {
-        repository.clearAllNews()
-        super.onDestroy()
-    }
-
-
     private fun initUi() {
         newsRecyclerView.layoutManager = LinearLayoutManager(context)
         newsRecyclerView.adapter = adapter
-        getAllNews()
+        val currentTime = getCurrentTimestamp()
+        if(currentTime!!.equals(0)||checkTime(currentTime)||repository.sizeOfDb().equals(0)){
+            progress.visible()
+            getAllNews()
+        }else{
+            adapter.setData(repository.getNews())
+        }
+    }
+
+    override fun onDestroy() {
+        saveTimestamp(System.currentTimeMillis()/1000)
+        super.onDestroy()
     }
 
     private fun onItemSelected(news: News){
@@ -66,16 +64,18 @@ class NewsFragment : BaseFragment() {
     }
 
     private fun getAllNews() {
+        progress.visible()
         interactor.getNews(getNewsCallback())
     }
 
     private fun getNewsCallback(): Callback<GetNewsResponse> = object : Callback<GetNewsResponse> {
         override fun onFailure(call: Call<GetNewsResponse>?, t: Throwable?) {
-            //TODO : handle default error
+            progress.gone()
+            activity?.displayToast("Something went wrong!")
         }
 
         override fun onResponse(call: Call<GetNewsResponse>?, response: Response<GetNewsResponse>) {
-
+            progress.gone()
             if (response.isSuccessful) {
                 when (response.code()) {
                     RESPONSE_OK -> handleOkResponse(response)
@@ -91,17 +91,28 @@ class NewsFragment : BaseFragment() {
         }
     }
 
-
-    private fun handleSomethingWentWrong() = this.activity?.displayToast("Something went wrong!")
-
+    private fun handleSomethingWentWrong() = activity?.displayToast("Something went wrong!")
 
     private fun onNewsReceived(news: MutableList<News>) {
+        repository.clearAllNews()
         news.forEach{
             repository.addNews(it)
         }
         adapter.setData(repository.getNews())
     }
 
+    private fun saveTimestamp(timestamp: Long) {
+        NewsPrefs.store(NewsPrefs.TIMESTAMP,timestamp)
+    }
+
+    private fun getCurrentTimestamp(): Long? {
+        return NewsPrefs.getLong(NewsPrefs.TIMESTAMP,0)
+    }
+
+    private fun checkTime(oldTimestamp: Long): Boolean{
+        val difference = (System.currentTimeMillis()/1000) - oldTimestamp
+        return difference>300
+    }
 
     companion object {
         fun newInstance(): Fragment {

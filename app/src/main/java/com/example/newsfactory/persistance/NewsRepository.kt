@@ -12,4 +12,6 @@ interface NewsRepository {
 
     fun clearAllNews()
 
+    fun sizeOfDb(): Int
+
 }
