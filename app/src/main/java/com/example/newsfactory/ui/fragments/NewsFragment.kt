@@ -1,9 +1,13 @@
 package com.example.newsfactory.ui.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsfactory.R
@@ -42,17 +46,22 @@ class NewsFragment : BaseFragment() {
         newsRecyclerView.layoutManager = LinearLayoutManager(context)
         newsRecyclerView.adapter = adapter
         val currentTime = getCurrentTimestamp()
-        if(currentTime!!.equals(0)||checkTime(currentTime)||repository.sizeOfDb().equals(0)){
+        if((currentTime!!.equals(0)||checkTime(currentTime)||repository.sizeOfDb().equals(0))&&isConnected()){
             progress.visible()
             getAllNews()
+        }
+        else if (repository.sizeOfDb().equals(0)&&!isConnected()){
+            errorDialog()
         }else{
             adapter.setData(repository.getNews())
         }
     }
 
-    override fun onDestroy() {
-        saveTimestamp(System.currentTimeMillis()/1000)
-        super.onDestroy()
+    private fun isConnected(): Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnected == true
+        return isConnected
     }
 
     private fun onItemSelected(news: News){
@@ -71,7 +80,7 @@ class NewsFragment : BaseFragment() {
     private fun getNewsCallback(): Callback<GetNewsResponse> = object : Callback<GetNewsResponse> {
         override fun onFailure(call: Call<GetNewsResponse>?, t: Throwable?) {
             progress.gone()
-            activity?.displayToast("Something went wrong!")
+            errorDialog()
         }
 
         override fun onResponse(call: Call<GetNewsResponse>?, response: Response<GetNewsResponse>) {
@@ -91,7 +100,7 @@ class NewsFragment : BaseFragment() {
         }
     }
 
-    private fun handleSomethingWentWrong() = activity?.displayToast("Something went wrong!")
+    private fun handleSomethingWentWrong() = errorDialog()
 
     private fun onNewsReceived(news: MutableList<News>) {
         repository.clearAllNews()
@@ -99,6 +108,7 @@ class NewsFragment : BaseFragment() {
             repository.addNews(it)
         }
         adapter.setData(repository.getNews())
+        saveTimestamp(System.currentTimeMillis()/1000)
     }
 
     private fun saveTimestamp(timestamp: Long) {
@@ -112,6 +122,14 @@ class NewsFragment : BaseFragment() {
     private fun checkTime(oldTimestamp: Long): Boolean{
         val difference = (System.currentTimeMillis()/1000) - oldTimestamp
         return difference>300
+    }
+
+    private fun errorDialog() {
+        AlertDialog.Builder(context!!)
+            .setTitle(getString(R.string.error))
+            .setMessage(getString(R.string.errorMsg))
+            .setNeutralButton(getString(R.string.ok),null)
+            .show()
     }
 
     companion object {
