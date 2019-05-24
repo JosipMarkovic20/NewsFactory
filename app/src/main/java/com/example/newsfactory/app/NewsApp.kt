@@ -17,5 +17,4 @@ class NewsApp : Application() {
         super.onCreate()
     }
 
-
 }

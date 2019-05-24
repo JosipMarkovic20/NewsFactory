@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.newsfactory.R
-import com.example.newsfactory.common.EXTRA_NEWS_ID
 import com.example.newsfactory.model.News
 import com.example.newsfactory.persistance.NewsRoomRepository
 import com.example.newsfactory.ui.adapters.NewsPagerAdapter
@@ -42,8 +41,8 @@ class PagerFragment(val newsId: Int) : Fragment() {
         return 0
     }
 
-
     private fun buildAdapter(): PagerAdapter {
         return NewsPagerAdapter(childFragmentManager)
     }
+
 }

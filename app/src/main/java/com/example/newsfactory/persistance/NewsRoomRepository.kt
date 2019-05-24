@@ -8,7 +8,6 @@ import com.example.newsfactory.model.News
 
 class NewsRoomRepository : NewsRepository {
 
-
     private var db: DaoProvider = DaoProvider.getInstance(NewsApp.getAppContext())
     private var newsDao: NewsDao = db.newsDao()
 

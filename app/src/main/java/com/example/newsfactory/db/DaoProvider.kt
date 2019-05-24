@@ -8,6 +8,7 @@ import com.example.newsfactory.model.News
 
 @Database(entities = [News::class], version = 1, exportSchema = false)
 abstract class DaoProvider : RoomDatabase() {
+
     abstract fun newsDao(): NewsDao
     companion object {
         private var instance: DaoProvider? = null
@@ -22,4 +23,5 @@ abstract class DaoProvider : RoomDatabase() {
             return instance as DaoProvider
         }
     }
+
 }

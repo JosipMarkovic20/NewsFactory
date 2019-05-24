@@ -9,7 +9,6 @@ class NewsAdapter(private val onItemSelected: (News) -> Unit) : RecyclerView.Ada
 
     private val data: MutableList<News> = mutableListOf()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
         return NewsHolder(v)

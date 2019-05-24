@@ -10,13 +10,11 @@ import com.example.newsfactory.model.News
 import com.example.newsfactory.persistance.NewsRoomRepository
 import com.example.newsfactory.ui.fragments.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_news_details.*
-import kotlinx.android.synthetic.main.item_news.view.*
 
 class NewsDetailsFragment : BaseFragment(){
 
     private var newsID = NO_NEWS
     private val repository = NewsRoomRepository()
-
 
     override fun getLayoutResourceId(): Int {
         return R.layout.fragment_news_details
@@ -27,7 +25,6 @@ class NewsDetailsFragment : BaseFragment(){
         arguments?.getInt(EXTRA_NEWS_ID)?.let { newsID = it }
         displayTask(repository.getNewsBy(newsID))
     }
-
 
     private fun displayTask(news: News) {
         Glide.with(NewsApp.getAppContext())

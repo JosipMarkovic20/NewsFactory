@@ -20,6 +20,6 @@ class NewsHolder(override val containerView: View) : RecyclerView.ViewHolder(con
             .placeholder(R.drawable.placeholder_image)
             .error(R.drawable.placeholder_image)
             .into(containerView.newsPic)
-    }
 
+    }
 }

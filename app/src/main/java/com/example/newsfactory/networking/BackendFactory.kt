@@ -11,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object BackendFactory {
 
     private var retrofit: Retrofit? = null
-    private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+    private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val httpClient =
         OkHttpClient.Builder()
@@ -33,4 +33,5 @@ object BackendFactory {
     private fun getService(): NewsApiService = this.client!!.create(NewsApiService::class.java)
 
     fun getNewsInteractor(): NewsInteractor = NewsInteractorImpl(getService())
+
 }

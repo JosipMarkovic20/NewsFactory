@@ -9,7 +9,6 @@ object NewsPrefs{
 
     private fun sharedPrefs() = PreferenceManager.getDefaultSharedPreferences(NewsApp.getAppContext())
 
-
     fun store(key: String, value: Long){
 
         sharedPrefs().edit().putLong(key,value).apply()

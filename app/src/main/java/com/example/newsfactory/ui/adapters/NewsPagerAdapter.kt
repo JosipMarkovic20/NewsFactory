@@ -3,7 +3,6 @@ package com.example.newsfactory.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.PagerAdapter
 import com.example.newsfactory.model.News
 import com.example.newsfactory.persistance.NewsRoomRepository
 import com.example.newsfactory.ui.fragments.NewsDetailsFragment
