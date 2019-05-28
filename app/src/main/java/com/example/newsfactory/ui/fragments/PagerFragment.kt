@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.newsfactory.R
 import com.example.newsfactory.model.News
 import com.example.newsfactory.persistance.NewsRoomRepository
+import com.example.newsfactory.ui.activities.ContainerActivity
 import com.example.newsfactory.ui.adapters.NewsPagerAdapter
 
 class PagerFragment(val newsId: Int) : Fragment() {

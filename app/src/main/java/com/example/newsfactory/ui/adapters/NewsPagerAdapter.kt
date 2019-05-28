@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.newsfactory.model.News
 import com.example.newsfactory.persistance.NewsRoomRepository
+import com.example.newsfactory.ui.activities.ContainerActivity
 import com.example.newsfactory.ui.fragments.NewsDetailsFragment
 
 class NewsPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
@@ -17,6 +18,7 @@ class NewsPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
         val fragment = NewsDetailsFragment.newInstance(newsObject!!)
         return fragment
     }
+
 
     override fun getCount() = newsList.size
 }
